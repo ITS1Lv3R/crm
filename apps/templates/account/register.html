@@ -1,0 +1,19 @@
+{% extends "sales/base.html" %}
+{% load static %}
+
+{% block title %}Создайте новый аккаунт{% endblock %}
+
+{% block content %}
+    <p><a href="{% url 'sales:index' %}">Сайт</a> / Регистрация</p>
+    <h4>Создайте новый аккаунт</h4>
+    <p>Пожалуйста, заполните все необходимые поля в форме:</p>
+
+    <form action="." method="post" class="login_form">
+              <label for="email">Email:</label>
+              <input id='email' type="email" name='email' /><br>
+              <label for="userPassword">Пароль:</label>
+              <input id='userPassword' type="password" name='password' maxlength='20' />
+              {% csrf_token %}
+          <input type="submit" value="Создать аккаунт">
+     </form>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends "sales/base.html" %}
+{% load static %}
+{% block title %}Вход на сайт{% endblock %}
+
+
+{% block content %}
+    <p><a href="{% url 'sales:index' %}">Сайт</a> / Авторизация</p>
+    <h4>Заполните имя пользователя и пароль. </h4>
+        <p>Если у вас нет аккаунта, перейдите на форму
+            <a href="{% url 'register' %}">Регистрации</a></p>
+
+    <div class="login">
+        <form action="{% url 'login' %}" method="post" class="login_form">
+              <label for="email">Email:</label>
+              <input id='email' type="email" name='email' /><br>
+              <label for="userPassword">Пароль:</label>
+              <input id='userPassword' type="password" name='password' maxlength='20' />
+              {% csrf_token %}
+              <input type="submit" value="Войти на сайт" >
+        </form>
+        <a href="{% url 'register' %}"><input class="register_href" type="submit" value="Регистрация"></a><br><br>
+          <a href="{% url 'password_reset' %}">Забыли Ваш пароль?</a>
+    </div>
+
+    <div class="social">
+        Войдите через социальные сети<br>
+
+        <a href="{% url 'social:begin' 'google-oauth2' %}">
+            <img src="{% static 'img/lgoogle.png' %}"></a>
+
+        <a class="vk" href="/login/vk-oauth2">
+             <img src="{% static 'img/vk.png' %}"></a>
+
+        <a class="fb" href="{% url 'social:begin' 'facebook' %}">
+              <img src="{% static 'img/facebook.png' %}"></a>
+
+    </div>
+
+{% endblock %}

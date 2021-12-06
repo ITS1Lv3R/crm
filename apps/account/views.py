@@ -82,8 +82,6 @@ def profile(request):
         user_form = UserProfileForm(instance=request.user)
 
     user = request.user
-    liked_images = user.likes.all()
-    liked_models = user.models.all()
 
     context = locals()
     template = 'account/profile.html'

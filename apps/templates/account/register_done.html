@@ -1,0 +1,9 @@
+{% extends "sales/base.html" %}
+
+{% block title %}Добро пожаловать на сайт{% endblock %}
+
+{% block content %}
+    <p><a href="{% url 'sales:index' %}">Сайт</a> / Регистрация прошла успешно</p>
+    <h1>Добро пожаловать, {{ new_user.username }}!</h1>
+    <p>Ваш аккаунт успешно создан. Вы можете <a href="{% url 'login' %}">авторизоваться на сайте</a>.</p>
+{% endblock %}

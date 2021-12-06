@@ -1,0 +1,83 @@
+{% load static %}
+{% autoescape off %}
+{% load thumbnail %}
+<!DOCTYPE html>
+<html lang="ru">
+<link rel="icon" href="https://faviconka.ru/ico/1/faviconka.ru_1_16865.ico" type="image/x-icon" />
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--    Подключаем css-->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
+<!--    Подключаем jquery-->
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+    <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <a href="/">𝓑𝓮𝓼𝓽 𝓠𝓾𝓮𝓼𝓽</a>
+        </div>
+
+        <div class="search">
+           <form action="{% url 'sales:search' %}" method="get">
+               <input name="q" type="text" placeholder="Поиск.." >
+           </form>
+        </div>
+
+        <div class="main_tabs">
+                <a class="menu__item" href="{% url 'sales:index' %}">Все квесты</a>
+        </div>
+
+        <div class="head_login">
+            {% if request.user.is_authenticated %}
+              <a href="{% url 'profile' %}">Личный кабинет</a>
+            {% else %}
+              <a href="{% url 'login' %}">Вход на сайт</a>
+            {% endif %}
+        </div>
+    </header>
+
+    <div class="main">
+       <div class="block_messages">
+            {% if messages %}
+              <ul class="messages">
+               {% for message in messages %}
+                <li class="{{ message.tags }}">
+                  {{ message|safe }}
+                    <a href="." class="close">x</a>
+                </li>
+              </ul>
+               {% endfor %}
+            {% endif %}
+       </div>
+
+        <div class="content">
+            {% block content %}
+                {% block pagination %}{% endblock %}
+            {% endblock %}
+        </div>
+
+        <footer>
+            <div class="channels">
+                <p>Наши каналы:</p>
+                <div class="channels-logo">
+                    <div>
+                        <a href="https://zen.yandex.ru/id/5e2859a673034b00ac152c7d">
+                        <img src="{% static 'img/yandex.png' %}"></a><br>
+                    </div>
+                    <div class="telegram">
+                        <a href="https://t.me/cosplay_best">
+                        <img src="{% static 'img/telegram.png' %}"></a><br>
+                    </div>
+                </div>
+            </div>
+
+        </footer>
+
+    </div>
+
+</body>
+</html>
+{% endautoescape %}
