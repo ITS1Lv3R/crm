@@ -15,9 +15,11 @@
     <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
+<div class="main">
     <header>
         <div class="logo">
-            <a href="/">𝓑𝓮𝓼𝓽 𝓠𝓾𝓮𝓼𝓽</a>
+            <a href="/">
+                <img src="{% static 'img/quest_logo.png' %}"></a><br>
         </div>
 
         <div class="search">
@@ -27,7 +29,13 @@
         </div>
 
         <div class="main_tabs">
-                <a class="menu__item" href="{% url 'sales:index' %}">Все квесты</a>
+                <a href="{% url 'sales:index' %}">Все квесты</a>
+                <a href=".">Условия</a>
+                <a href=".">Рейтинг</a>
+                <a href=".">Игрокам</a>
+                {% if request.user.is_staff %}
+                    <a href="{% url 'sales:orders_report' %}">Отчет по заказам</a>
+                {% endif %}
         </div>
 
         <div class="head_login">
@@ -39,7 +47,7 @@
         </div>
     </header>
 
-    <div class="main">
+
        <div class="block_messages">
             {% if messages %}
               <ul class="messages">
@@ -55,28 +63,24 @@
 
         <div class="content">
             {% block content %}
-                {% block pagination %}{% endblock %}
             {% endblock %}
         </div>
-
+ </div>
         <footer>
             <div class="channels">
-                <p>Наши каналы:</p>
+                <p class="grey">Наши каналы:</p>
                 <div class="channels-logo">
                     <div>
-                        <a href="https://zen.yandex.ru/id/5e2859a673034b00ac152c7d">
+                        <a href="/">
                         <img src="{% static 'img/yandex.png' %}"></a><br>
                     </div>
                     <div class="telegram">
-                        <a href="https://t.me/cosplay_best">
+                        <a href="/">
                         <img src="{% static 'img/telegram.png' %}"></a><br>
                     </div>
                 </div>
             </div>
-
         </footer>
-
-    </div>
 
 </body>
 </html>

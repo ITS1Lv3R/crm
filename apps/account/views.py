@@ -18,7 +18,7 @@ def user_login(request):
             if user.is_active:  # Проверяем активен ли юзер
                 login(request, user)
                 messages.success(request, 'Вы успешно авторизовались на сайте!')
-                return redirect('core:index')  # Если всё ок, отправляем юзера на главную страницу
+                return redirect('sales:index')  # Если всё ок, отправляем юзера на главную страницу
             else:
                 messages.error(request, 'Аккаунт неактивен!')
                 return redirect('login')
@@ -57,7 +57,7 @@ def register(request):
             # После создания юзера и профиля отправляем пользователя в личный кабинет
             login(request, new_user, backend='django.contrib.auth.backends.ModelBackend')
             messages.success(request, 'Вы успешно зарегистрировались на сайте!')
-            return redirect('core:index')
+            return redirect('sales:index')
         else:
             messages.error(request, 'Пользователь с таким email уже существует')
             return redirect('register')

@@ -45,3 +45,22 @@ def search(request):
     quests = Quest.objects.filter(Q(name__icontains=query) | Q(description__icontains=query))
     return render(request, 'sales/search.html', {'quests': quests,
                                                  'query': query})
+
+
+def get_orders_total_count():
+    """ функция, рассчитывающая итоговое количество заказов за весь период"""
+    return Order.objects.all().count()
+
+
+def get_total_sum_all_orders():
+    """ функция, рассчитывающая итоговую сумму по всем заказам со скидкой"""
+    total_sum = sum(order.get_total_cost_discount() for order in Order.objects.all())
+    return total_sum
+
+
+def orders_report(request):
+    orders = Order.objects.all()
+    orders_total_count = get_orders_total_count()
+    total_sum_all_orders = get_total_sum_all_orders()
+    context = locals()
+    return render(request, 'sales/orders_report.html', context)

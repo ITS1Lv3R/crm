@@ -1,0 +1,36 @@
+{% extends "sales/base.html" %}
+{% load static %}
+{% load thumbnail %}
+
+{% block title %} Отчет по продажам{% endblock %}
+
+{% block content %}
+    <p><a href="{% url 'sales:index' %}">Главное меню</a> / Отчет по заказам</p>
+
+            <p>Отчет по заказам:</p>
+    <table id="table_orders_report">
+         <tr>
+            <th>Номер заказа</th>
+            <th>Статус заказа</th>
+            <th>Стоимость заказа</th>
+        </tr>
+      {% if orders %}
+        {% for order in orders %}
+        <tr>
+            <td>
+                 {{ order.id }}
+            </td>
+             <td>
+                 {{ order.status.name }}
+            </td>
+            <td>
+                 {{ order.get_total_cost_discount }}
+            </td>
+        </tr>
+           {% endfor %}
+    </table> <br>
+<div class="total_completed_orders">
+    Итого выполнено заказов: <b>{{ orders_total_count }}</b> на сумму <b>{{ total_sum_all_orders }} р.</b>
+</div>
+    {% endif %}
+{% endblock %}

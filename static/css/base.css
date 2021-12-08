@@ -1,7 +1,10 @@
 html, body {
   height: 100%;
   margin: 0;
+  padding: 0;
   font-size:18px;
+  background:black;
+  color:white;
 }
 img {
     max-width: 100%;
@@ -14,28 +17,38 @@ h1, h2 {
     text-align:left;
 }
 
+header, footer {
+	display: block;
+}
+
 header {
-    height:90px;
+    height:80px;
     padding:10px;
     display:flex;
     flex-direction: row;
 }
 
 .main {
-    width:100%;
-    display: flex;
-    flex-direction: column;
+	width: 100%;
+	min-height: 100%;
+	height: auto;
+	height: 100%;
 }
 
 .content {
-    width:80%;
-    margin: 0 auto;
-    min-height:600px;
+    padding: 50px;
+	height:75%;
+	width:100%;
+	margin:0 auto;
+	margin-top:1%;
+	background-color: #2d2d2d;
 }
 
-.main_view {
-    display: flex;
-    flex-direction: column;
+footer {
+    width: 100%;
+	margin: -100px auto 0;
+	height: 100px;
+	position: relative;
 }
 
 .logo {
@@ -47,17 +60,28 @@ header {
     color:red;
 }
 
+
+.post {
+    width: 300px;
+	float: left;
+	height:300px;
+    text-align:center;
+    font-size:15px;
+    margin-left:50px;
+    margin-right:50px;
+    margin-bottom:100px;
+}
+
+
 .search {
     position:absolute;
-    left:2%;
+    left:87%;
     top:50px;
-
 }
 
 .main_tabs {
     margin:0 auto;
     width:600px;
-
 }
 
 .head_login {
@@ -78,6 +102,10 @@ header {
     font-size:20px;
 }
 
+.grey {
+    color:grey
+}
+
 .head_login a:hover, .main_tabs a:hover {
     color:silver;
     cursor: pointer;
@@ -89,47 +117,28 @@ header {
 }
 
 
-.rubric {
-	height:350px;
-}
-
-.liked_photo {
-	width:500px;
-}
-
 .profile_info {
    margin-top:50px;
-
 }
 
 .pagination {
     width:300px;
     text-align:left;
 }
-footer {
-   margin-top:20px;
-   display: flex;
-   flex-direction: row;
-}
-
-footer a{
-    color:silver;
-}
 
 .channels {
    margin:0 auto;
    height:100px;
    width:200px;
-   font-size:20px;
+   font-size:18px;
 }
 .channels-logo {
    display: flex;
    flex-direction: row;
-
+   margin-bot:20px;
 }
-.channels-logo .telegram {
+.telegram {
     margin-left:20px;
-
 }
 .donate {
     margin-right:30px;
@@ -211,5 +220,14 @@ ul.messages li a.close {
     border:0;
     box-shadow:none;
     text-shadow:none;
+}
+
+#table_orders_report {
+    width:100%;
+}
+
+#table_orders_report tr, #table_orders_report td, #table_orders_report th {
+    border: 2px solid grey;
+    text-align:center;
 }
 

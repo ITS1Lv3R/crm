@@ -2,20 +2,17 @@
 {% load static %}
 {% load thumbnail %}
 
-{% block title %}Лучшие квесты{% endblock %}
+{% block title %}Лучшие квесты в твоём городе{% endblock %}
 
 {% block content %}
-<div class="main_view">
-    <div>
         {% for quest in quests %}
-            <a href="{% url 'sales:quest_detail' quest.slug %}"><img src="{% thumbnail quest.image 300x300 crop %}"></a>
-        {% endfor %}
-    </div>
-
-    <div class="pagination">
-        {% block pagination %}
-                {% include "sales/pagination.html" with page=page_obj %}
-        {% endblock %}
-     </div>
-</div>
+            <div class="post">
+                <b><a href="{{ quest.get_absolute_url }}">{{ quest.name }}<br>
+                    <img src="{% thumbnail quest.image 300x300 crop %}"></a></b><br>
+                    Цена {{ quest.price }} р.<br>
+                    Длительность {{ quest.duration }}
+                <br>
+                {{ post.created }} <br>
+            </div>
+         {% endfor %}
 {% endblock %}
