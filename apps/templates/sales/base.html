@@ -47,21 +47,19 @@
         </div>
     </header>
 
-
-       <div class="block_messages">
-            {% if messages %}
-              <ul class="messages">
-               {% for message in messages %}
-                <li class="{{ message.tags }}">
-                  {{ message|safe }}
-                    <a href="." class="close">x</a>
-                </li>
-              </ul>
-               {% endfor %}
-            {% endif %}
-       </div>
-
         <div class="content">
+           <div class="block_messages">
+                {% if messages %}
+                  <ul class="messages">
+                   {% for message in messages %}
+                    <li class="{{ message.tags }}">
+                      {{ message|safe }}
+                        <a href="." class="close">x</a>
+                    </li>
+                  </ul>
+                   {% endfor %}
+                {% endif %}
+           </div>
             {% block content %}
             {% endblock %}
         </div>

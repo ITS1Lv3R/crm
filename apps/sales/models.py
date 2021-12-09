@@ -27,7 +27,11 @@ class Order(models.Model):
                                null=True,
                                blank=True,
                                on_delete=models.SET_NULL, verbose_name='Купон')
-    quests = models.ManyToManyField("Quest")
+    quest = models.ForeignKey("Quest",
+                              related_name='quest',
+                              null=True,
+                              blank=True,
+                              on_delete=models.SET_NULL, verbose_name='Квест')
     objects = BaseUserManager()
 
     class Meta:
@@ -55,13 +59,12 @@ class Order(models.Model):
     get_discount_percent.short_description = 'Скидка'
 
     def get_total_cost(self):
-        total_cost = sum(item.price for item in self.quests.all())
-        return total_cost
+        return self.quest.price
 
     get_total_cost.short_description = 'Стоимость заказа'
 
     def get_total_cost_discount(self):
-        total_cost = sum(item.price for item in self.quests.all())
+        total_cost = self.quest.price
         if self.get_discount() == 0:
             return total_cost
         else:
@@ -111,6 +114,9 @@ class Quest(models.Model):
     description = models.CharField(max_length=150, verbose_name='Описание квеста')
     image = ThumbnailerImageField('Фото', upload_to=upload_path_quest_photo, blank=True)
     duration = models.DurationField(verbose_name='Длительность квеста')
+    difficulty = models.PositiveIntegerField(default=5,
+                                             validators=[MinValueValidator(1), MaxValueValidator(5)],
+                                             verbose_name='Сложность квеста')
     price = models.DecimalField(max_digits=10, decimal_places=0, verbose_name='Цена квеста')
     type = models.ForeignKey("TypeQuest",
                              related_name='quests',
@@ -130,6 +136,21 @@ class Quest(models.Model):
     def get_absolute_url(self):
         return reverse('sales:quest_detail', args=[self.slug])
 
+    def get_quest_value(self):
+        quest_feedbacks = QuestFeedBack.objects.filter(quest=self)
+        count = QuestFeedBack.objects.filter(quest=self).count()
+        total_value = sum(feedback.feedback_value.value for feedback in quest_feedbacks)
+        if count > 0:
+            quest_value = total_value / count
+            return quest_value
+        else:
+            return 0
+
+    get_quest_value.short_description = 'Оценка квеста'
+
+    def get_all_feedback(self):
+        return QuestFeedBack.objects.filter(quest=self)
+
 
 class TypeQuest(models.Model):
     name = models.CharField(max_length=50, verbose_name='Наименование типа')
@@ -143,3 +164,39 @@ class TypeQuest(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class QuestFeedBack(models.Model):
+    description = models.CharField(max_length=500, verbose_name='Описание типа', blank=True)
+    quest = models.ForeignKey("Quest",
+                              related_name='feedbacks',
+                              null=True,
+                              blank=True,
+                              on_delete=models.SET_NULL, verbose_name='Отзыв о квесте')
+    feedback_value = models.ForeignKey("FeedBackValue",
+                                       related_name='feedback_value',
+                                       null=True,
+                                       blank=True,
+                                       on_delete=models.SET_NULL, verbose_name='Оценка отзыва')
+    objects = BaseUserManager()
+
+    class Meta:
+        ordering = ('id',)
+        verbose_name = 'Отзыв квеста'
+        verbose_name_plural = 'Отзывы квеста'
+
+    def __str__(self):
+        return str(self.id)
+
+
+class FeedBackValue(models.Model):
+    value = models.IntegerField(verbose_name='Оценка в отзыве')
+    objects = BaseUserManager()
+
+    class Meta:
+        ordering = ('id',)
+        verbose_name = 'Оценка отзыва'
+        verbose_name_plural = 'Оценки для отзывов'
+
+    def __str__(self):
+        return str(self.id)

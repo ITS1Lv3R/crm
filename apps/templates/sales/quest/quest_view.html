@@ -5,13 +5,33 @@
 {% block title %}Информация по квесту{% endblock %}
 
 {% block content %}
-<div class="main_view">
-    <div class="posts">
-        {% for quest in quests %}
-        {{ quest.name }}
-        <a><img src="{% thumbnail quest.image 300x300 crop %}"> {{ quest.name }}</a>
-        {% endfor %}
+ <h3>{{ quest.name }}</h3>
+<div class="quest_detail_info">
+    <div class="quest_info">
+        <img src="{% thumbnail quest.image 500x500 crop %}">
     </div>
+
+    <div class="detail_info">
+        Описание квеста: {{ quest.description }} <br>
+        Длительность:{{ quest.duration }}<br>
+        Сложность: {{ quest.difficulty }}<br>
+        Тип квеста: {{ quest.type.name }}<br>
+        Оценка квеста: {{ quest.get_quest_value }} <br>
+
+    <button><a href="{% url 'sales:order' quest.slug %}">Забронировать</a></button>
+    </div>
+
+    <div class="feedback_quest">
+        <p>Отзывы о квесте "{{ quest.name }}"</p>
+        {% if quest.get_all_feedback %}
+            {% for feedback in quest.get_all_feedback %}
+                <div class="feedback"> {{ feedback.description }}. Оценка: {{ feedback.feedback_value }}</div><br>
+            {% endfor %}
+        {% else %}
+            <p>Пока нет отзывов о данном квесте</p>
+        {% endif %}
+    </div>
+
 
 </div>
 {% endblock %}

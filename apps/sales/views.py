@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic.base import View
 from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
@@ -64,3 +64,18 @@ def orders_report(request):
     total_sum_all_orders = get_total_sum_all_orders()
     context = locals()
     return render(request, 'sales/orders_report.html', context)
+
+
+def order(request, slug):
+    quest = Quest.objects.get(slug=slug)
+    if request.user.is_authenticated:
+        Order.objects.create(quest=quest,
+                             client=request.user,
+                             time_start="2021-12-09 14:00:00",
+                             time_finish="2021-12-09 15:00:00"
+                             )
+        messages.success(request, "Вы успешно заказали квест!")
+        return redirect('sales:quest_detail', quest.slug)
+    else:
+        messages.error(request, "Для заказа квеста авторизуйтесь на сайте")
+        return redirect('login')

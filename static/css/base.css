@@ -39,7 +39,6 @@ header {
     padding: 50px;
 	height:75%;
 	width:100%;
-	margin:0 auto;
 	margin-top:1%;
 	background-color: #2d2d2d;
 }
@@ -94,7 +93,7 @@ footer {
 
 .block_messages {
     font-size:15px;
-    margin:0 auto;
+    margin-right:10%;
 
 }
 .head_login a, .main_tabs a {
@@ -115,7 +114,6 @@ footer {
     cursor: pointer;
     text-decoration:none;
 }
-
 
 .profile_info {
    margin-top:50px;
@@ -231,3 +229,19 @@ ul.messages li a.close {
     text-align:center;
 }
 
+.quest_detail_info {
+    display:flex;
+    flex-direction: row;
+}
+.quest_info {
+    width:300px;
+    margin-left:100px;
+}
+
+.detail_info {
+    width:500px;
+    margin-left:50px;
+}
+.feedback {
+    border: 1px solid white;
+}
