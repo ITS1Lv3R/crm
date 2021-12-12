@@ -1,11 +1,10 @@
 from django.contrib import messages
 from django.shortcuts import render, redirect
-from django.views.generic.base import View
-from django.views.generic.detail import DetailView
 from django.views.generic.list import ListView
 
 from .models import *
 from django.db.models import Q
+from ..content.models import Quest
 
 
 class IndexView(ListView):
@@ -14,13 +13,6 @@ class IndexView(ListView):
     template_name = 'sales/index.html'
     context_object_name = 'quests'
     paginate_by = 6
-
-
-class QuestDetailView(DetailView):
-    """ Детальная вью для изображений"""
-    model = Quest
-    template_name = 'sales/quest/quest_view.html'
-    context_object_name = 'quest'
 
 
 def page_not_found(request, exception):
@@ -68,7 +60,7 @@ def orders_report(request):
     return render(request, 'sales/orders_report.html', context)
 
 
-def order(request, slug):
+def order_create(request, slug):
     """ Заглушка на форму заказа квеста"""
     quest = Quest.objects.get(slug=slug)
     if request.user.is_authenticated:
@@ -80,7 +72,7 @@ def order(request, slug):
                              manager=Manager.objects.get(id=1)
                              )
         messages.success(request, "Вы успешно заказали квест!")
-        return redirect('sales:quest_detail', quest.slug)
+        return redirect('content:quest_detail', quest.slug)
     else:
         messages.error(request, "Для заказа квеста авторизуйтесь на сайте")
         return redirect('login')

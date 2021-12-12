@@ -11,7 +11,7 @@
                     <img src="{% thumbnail quest.image 300x300 crop %}"></a></b><br>
                     Цена {{ quest.price }} р.<br>
                     Длительность {{ quest.duration }}<br>
-                <button><a href="{% url 'sales:order' quest.slug %}">Забронировать</a></button>
+                <button><a href="{% url 'sales:order_create' quest.slug %}">Забронировать</a></button>
 
             </div>
          {% endfor %}

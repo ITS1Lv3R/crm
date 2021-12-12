@@ -5,6 +5,8 @@
 {% block title %}Информация по квесту{% endblock %}
 
 {% block content %}
+<p><a href="{% url 'sales:index' %}">Главное меню</a> / Информация по квесту </p>
+
  <h3>{{ quest.name }}</h3>
 <div class="quest_detail_info">
     <div class="quest_info">
@@ -18,7 +20,7 @@
         Тип квеста: {{ quest.type.name }}<br>
         Оценка квеста: {{ quest.get_quest_value }} <br>
 
-    <button><a href="{% url 'sales:order' quest.slug %}">Забронировать</a></button>
+    <button><a href="{% url 'sales:order_create' quest.slug %}">Забронировать</a></button>
     </div>
 
     <div class="feedback_quest">
