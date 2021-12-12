@@ -10,9 +10,9 @@
                 <b><a href="{{ quest.get_absolute_url }}">{{ quest.name }}<br>
                     <img src="{% thumbnail quest.image 300x300 crop %}"></a></b><br>
                     Цена {{ quest.price }} р.<br>
-                    Длительность {{ quest.duration }}
-                <br>
-                {{ post.created }} <br>
+                    Длительность {{ quest.duration }}<br>
+                <button><a href="{% url 'sales:order' quest.slug %}">Забронировать</a></button>
+
             </div>
          {% endfor %}
 {% endblock %}

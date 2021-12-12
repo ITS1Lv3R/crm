@@ -5,13 +5,15 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from easy_thumbnails.fields import ThumbnailerImageField
 
-from ..account.models import User
+from ..account.models import User, Manager
 
 
 class Order(models.Model):
     """ Модель для заказов пользователя"""
     client = models.ForeignKey(User, related_name='orders', on_delete=models.CASCADE,
                                verbose_name='Заказ Пользователя')
+    manager = models.ForeignKey(Manager, related_name='orders_manager', on_delete=models.CASCADE,
+                                verbose_name='Менеджер')
     comment = models.CharField('Комментарий к заказу', max_length=100)
     is_confirmed = models.BooleanField('Подвержден?', default=False)
     date_creation = models.DateTimeField(verbose_name='Дата создания заказа', auto_now_add=True)
@@ -32,6 +34,9 @@ class Order(models.Model):
                               null=True,
                               blank=True,
                               on_delete=models.SET_NULL, verbose_name='Квест')
+    count_players = models.PositiveIntegerField(default=2,
+                                                validators=[MinValueValidator(1), MaxValueValidator(5)],
+                                                verbose_name='Количество игроков')
     objects = BaseUserManager()
 
     class Meta:

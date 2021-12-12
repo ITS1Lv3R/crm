@@ -32,9 +32,11 @@
                 <a href="{% url 'sales:index' %}">Все квесты</a>
                 <a href=".">Условия</a>
                 <a href=".">Рейтинг</a>
-                <a href=".">Игрокам</a>
+                <a href=".">FAQ</a>
+
                 {% if request.user.is_staff %}
                     <a href="{% url 'sales:orders_report' %}">Отчет по заказам</a>
+                    <a href="{% url 'admin:index' %}">CRM</a>
                 {% endif %}
         </div>
 

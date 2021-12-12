@@ -59,20 +59,25 @@ def get_total_sum_all_orders():
 
 
 def orders_report(request):
+    """ Отчет по продажам"""
     orders = Order.objects.all()
     orders_total_count = get_orders_total_count()
     total_sum_all_orders = get_total_sum_all_orders()
+
     context = locals()
     return render(request, 'sales/orders_report.html', context)
 
 
 def order(request, slug):
+    """ Заглушка на форму заказа квеста"""
     quest = Quest.objects.get(slug=slug)
     if request.user.is_authenticated:
         Order.objects.create(quest=quest,
                              client=request.user,
                              time_start="2021-12-09 14:00:00",
-                             time_finish="2021-12-09 15:00:00"
+                             time_finish="2021-12-09 15:00:00",
+                             status=Status.objects.get(name='Новый'),
+                             manager=Manager.objects.get(id=1)
                              )
         messages.success(request, "Вы успешно заказали квест!")
         return redirect('sales:quest_detail', quest.slug)

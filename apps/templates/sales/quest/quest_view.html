@@ -22,7 +22,7 @@
     </div>
 
     <div class="feedback_quest">
-        <p>Отзывы о квесте "{{ quest.name }}"</p>
+        <p>Отзывы о квесте "{{ quest.name }}":</p>
         {% if quest.get_all_feedback %}
             {% for feedback in quest.get_all_feedback %}
                 <div class="feedback"> {{ feedback.description }}. Оценка: {{ feedback.feedback_value }}</div><br>
