@@ -5,10 +5,10 @@ from .models import *
 
 
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ['id', 'client', 'comment', 'is_confirmed', 'time_start',
+    list_display = ['id', 'client', 'manager', 'comment', 'is_confirmed', 'time_start',
                     'time_finish', 'status', 'coupon',
                     Order.get_total_cost, Order.get_total_cost_discount, Order.get_discount_percent]
-    list_filter = ['id', 'client', 'comment', 'is_confirmed', 'date_creation', 'time_start',
+    list_filter = ['manager', 'is_confirmed', 'date_creation', 'time_start',
                    'time_finish', 'status', 'coupon']
     list_editable = ['status']
 

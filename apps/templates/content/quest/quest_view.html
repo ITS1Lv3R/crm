@@ -7,7 +7,7 @@
 {% block content %}
 <p><a href="{% url 'sales:index' %}">Главное меню</a> / Информация по квесту </p>
 
- <h3>{{ quest.name }}</h3>
+<h3 style="margin-left:100px"> {{ quest.name }}</h3>
 <div class="quest_detail_info">
     <div class="quest_info">
         <img src="{% thumbnail quest.image 500x500 crop %}">
@@ -23,7 +23,7 @@
     <button><a href="{% url 'sales:order_create' quest.slug %}">Забронировать</a></button>
     </div>
 
-    <div class="feedback_quest">
+    <div style="width:300px;">
         <p>Отзывы о квесте "{{ quest.name }}":</p>
         {% if quest.get_all_feedback %}
             {% for feedback in quest.get_all_feedback %}

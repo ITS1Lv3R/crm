@@ -70,7 +70,7 @@ class TypeQuest(models.Model):
 
 
 class QuestFeedBack(models.Model):
-    description = models.CharField(max_length=500, verbose_name='Описание типа', blank=True)
+    description = models.CharField(max_length=500, verbose_name='Отзыв', blank=True)
     quest = models.ForeignKey("Quest",
                               related_name='feedbacks',
                               null=True,
