@@ -1,11 +1,9 @@
 from decimal import Decimal
-from django.urls import reverse
 from django.contrib.auth.base_user import BaseUserManager
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
-from easy_thumbnails.fields import ThumbnailerImageField
 
-from ..account.models import User, Manager
+from ..account.models import User
 from ..content.models import Quest
 
 
@@ -13,7 +11,7 @@ class Order(models.Model):
     """ Модель для заказов пользователя"""
     client = models.ForeignKey(User, related_name='orders', on_delete=models.CASCADE,
                                verbose_name='Заказ Пользователя')
-    manager = models.ForeignKey(Manager, related_name='orders_manager', on_delete=models.CASCADE,
+    manager = models.ForeignKey("Manager", related_name='orders_manager', on_delete=models.CASCADE,
                                 verbose_name='Менеджер')
     comment = models.CharField('Комментарий к заказу', max_length=100)
     is_confirmed = models.BooleanField('Подвержден?', default=False)
@@ -108,3 +106,27 @@ class Status(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Manager(models.Model):
+    POST_CHOISES = (
+        ('Менеджер', 'Менеджер'),
+        ('Старший менеджер', 'Старший менеджер'),
+        ('Администратор', 'Администратор'),
+    )
+    user = models.ForeignKey(User, related_name='user', on_delete=models.CASCADE,
+                             verbose_name='Пользователь')
+    post = models.CharField(choices=POST_CHOISES, verbose_name="Должность", max_length=60)
+    objects = BaseUserManager()
+
+    def __str__(self):
+        return self.user.first_name + " " + self.user.last_name
+
+    class Meta:
+        ordering = ('post',)
+        verbose_name = 'Менеджер'
+        verbose_name_plural = 'Менеджеры'
+
+    def get_all_sales(self):
+        """ все продажи менеджера за всё время"""
+        return Order.objects.filter(manager=self)

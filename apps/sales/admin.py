@@ -23,6 +23,11 @@ class StatusAdmin(admin.ModelAdmin):
     list_filter = ['name', ]
 
 
+class ManagerAdmin(admin.ModelAdmin):
+    list_display = ['user', 'post']
+
+
 admin.site.register(Order, OrderAdmin)
 admin.site.register(Coupon, CouponAdmin)
 admin.site.register(Status, StatusAdmin)
+admin.site.register(Manager, ManagerAdmin)

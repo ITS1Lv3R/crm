@@ -7,16 +7,17 @@
 {% block content %}
     <p><a href="{% url 'sales:index' %}">Главное меню</a> / Отчет по заказам</p>
 
-            <p>Отчет по заказам:</p>
-   {% if orders %}
-        {% for order in orders %}
-            {{ order.manager }}    "{{ order.manager.post }}"
+    <p>Отчет по заказам:</p>
+    {% if managers %}
+        {% for manager in managers %}
+            {{ manager }}    "{{ manager.post }}"
     <table id="table_orders_report">
          <tr>
             <th>Номер заказа</th>
             <th>Статус заказа</th>
             <th>Стоимость заказа</th>
         </tr>
+        {% for order in manager.get_all_sales %}
             <tr>
                 <td>
                      {{ order.id }}
@@ -28,11 +29,11 @@
                      {{ order.get_total_cost_discount }}
                 </td>
             </tr>
-
+        {% endfor %}
         </table> <br>
        {% endfor %}
        <div class="total_completed_orders">
-            Итого заказов на сегодня: <b>{{ orders_total_count }}</b> на сумму <b>{{ total_sum_all_orders }} р.</b>
+            Итого заказов: <b>{{ orders_total_count }}</b> на сумму <b>{{ total_sum_all_orders }} р.</b>
         </div>
     {% endif %}
 {% endblock %}

@@ -61,17 +61,3 @@ class User(AbstractBaseUser, PermissionsMixin):
         return self.first_name
 
 
-class Manager(models.Model):
-    POST_CHOISES = (
-        ('Менеджер', 'Менеджер'),
-        ('Старший менеджер', 'Старший менеджер'),
-        ('Администратор', 'Администратор'),
-    )
-    user = models.ForeignKey(User, related_name='user', on_delete=models.CASCADE,
-                             verbose_name='Пользователь')
-    post = models.CharField(choices=POST_CHOISES, verbose_name="Должность", max_length=60)
-    objects = UserManager()
-
-    def __str__(self):
-        return self.user.first_name + " " + self.user.last_name
-

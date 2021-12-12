@@ -52,10 +52,9 @@ def get_total_sum_all_orders():
 
 def orders_report(request):
     """ Отчет по продажам"""
-    orders = Order.objects.all()
+    managers = Manager.objects.all()
     orders_total_count = get_orders_total_count()
     total_sum_all_orders = get_total_sum_all_orders()
-
     context = locals()
     return render(request, 'sales/orders_report.html', context)
 
